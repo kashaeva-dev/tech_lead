@@ -38,7 +38,7 @@ class Item(models.Model):
                              verbose_name='Тип элемента',
                              related_name='items')
     description = models.TextField(verbose_name='Описание элемента')
-    icon = models.CharField(max_length=10, verbose_name='Иконка', blank=True)
+    icon = models.CharField(max_length=10, verbose_name='⛲', blank=True)
 
     def __str__(self):
         return self.name
@@ -61,27 +61,27 @@ class LineEnd(models.Model):
 
 class RelationType(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название типа связи')
-    icon = models.CharField(max_length=10, verbose_name='Иконка', blank=True)
+    icon = models.CharField(max_length=10, verbose_name='⛲', blank=True)
     out_type = models.ForeignKey(ItemType,
                              on_delete=models.PROTECT,
                              verbose_name='Тип источника',
                              related_name='relation_out_types')
-    out_type_mult = models.BooleanField(verbose_name='Группировка источников')
+    out_type_mult = models.BooleanField(verbose_name='Групп.')
     in_type = models.ForeignKey(ItemType,
                              on_delete=models.PROTECT,
                              verbose_name='Тип приемника',
                              related_name='relation_in_types')
-    in_type_mult = models.BooleanField(verbose_name='Группировка приемников')
-    line_solid = models.BooleanField(verbose_name='Непрерывная')
+    in_type_mult = models.BooleanField(verbose_name='Групп.')
+    line_solid = models.BooleanField(verbose_name='Непр.')
     line_out_type = models.ForeignKey(LineEnd,
                                       on_delete=models.PROTECT,
-                                      verbose_name='Конец источника',
+                                      verbose_name='И<-',
                                       related_name='relation_type_out_set')
     line_in_type = models.ForeignKey(LineEnd,
                                      on_delete=models.PROTECT,
-                                     verbose_name='Конец приемника',
+                                     verbose_name='->П',
                                      related_name='relation_type_in_set')
-    line_color = models.CharField(max_length=20, verbose_name='Цвет линии')
+    line_color = models.CharField(max_length=20, verbose_name='Цвет')
 
     def __str__(self):
         return self.name
@@ -100,11 +100,11 @@ class Relation(models.Model):
                                  on_delete=models.PROTECT,
                                  verbose_name='Источник',
                                  related_name='relations_out')
-    out_group_id = models.IntegerField(verbose_name='ID группы источника',
+    out_group_id = models.IntegerField(verbose_name='ID гр.И',
                                        null=True,
                                        blank=True,
                                        )
-    out_group_sort = models.IntegerField(verbose_name='Индекс в группе источника',
+    out_group_sort = models.IntegerField(verbose_name='Indx гр.И',
                                          null=True,
                                          blank=True,
                                          )
@@ -112,11 +112,11 @@ class Relation(models.Model):
                                  on_delete=models.PROTECT,
                                  verbose_name='Приемник',
                                  related_name='relations_in')
-    in_group_id = models.IntegerField(verbose_name='ID группы приемника',
+    in_group_id = models.IntegerField(verbose_name='ID гр.П',
                                       null=True,
                                       blank=True,
                                       )
-    in_group_sort = models.IntegerField(verbose_name='Индекс в группе приемника',
+    in_group_sort = models.IntegerField(verbose_name='Indx гр.П',
                                         null=True,
                                         blank=True,
                                         )
