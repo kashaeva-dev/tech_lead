@@ -22,8 +22,8 @@ class RelationAdminForm(forms.ModelForm):
 class RelationAdmin(admin.ModelAdmin):
     form = RelationAdminForm
     list_display = [
-        'relation_type',
         'out_item',
+        'relation_type',
         'in_item',
         'out_group_id',
         'out_group_sort',
@@ -67,15 +67,15 @@ class RelationAdmin(admin.ModelAdmin):
 @admin.register(RelationType)
 class RelationTypeAdmin(admin.ModelAdmin):
     list_display = [
-        'name',
-        'icon',
         'out_type',
         'out_type_mult',
+        'line_out_type',
+        'icon',
+        'name',
+        'line_in_type',
         'in_type',
         'in_type_mult',
         'line_solid',
-        'line_out_type',
-        'line_in_type',
         'line_color',
         'line_color_preview',
     ]
@@ -120,6 +120,16 @@ class RelationTypeAdmin(admin.ModelAdmin):
         if db_field.name == 'line_color':
             form_field.widget = forms.TextInput(attrs={
                 'style': 'width: 60px;',
+            })
+
+        if db_field.name == 'line_in_type':
+            form_field.widget = forms.Select(attrs={
+                'style': 'width: 50px;',
+            })
+
+        if db_field.name == 'line_out_type':
+            form_field.widget = forms.Select(attrs={
+                'style': 'width: 50px;',
             })
 
         return form_field
